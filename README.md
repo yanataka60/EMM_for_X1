@@ -2,7 +2,7 @@
 
 ![TITLE](https://github.com/yanataka60/EMM_for_X1/blob/main/JPEG/EMM_X1.JPG)
 
-　X1、X1turbo、X1turbo用の512K S-RAM EMMボードを作ってみました。
+　X1、X1turbo用の512K S-RAM EMMボードを作ってみました。
 
 　特徴としては、
 
