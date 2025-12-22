@@ -22,9 +22,12 @@ https://takeda-toshiya.my.coocan.jp/
 
 　この時、付加する32Byteのヘッダの内容はどんな内容でも構わないので00hを32Byte等好きにつけてください。
 
-### X millennium系
+### X millennium T-tune系
+　色々なバージョンが存在する中でEMMに対応しているのはT-tune系だけのようです。
 
-https://www.turboz.to/
+　X1センター様のX Millennum Ver 0.26 t-tune step 1.43など
+
+　http://www.x1center.org/
 
 　EMM DUMPファイルから32Byteのヘッダを除去し、EMMx.MEM(EMM0.MEM、EMM1.MEM、EMM2.MEM、EMM3.MEM)にリネームしてエミュレーターと同じフォルダに置けばエミュレーターから利用できるようになります。
 
