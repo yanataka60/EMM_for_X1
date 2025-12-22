@@ -25,7 +25,11 @@ https://takeda-toshiya.my.coocan.jp/
 ### X millennium T-tune系
 　色々なバージョンが存在する中でEMMに対応しているのはT-tune系だけのようです。
 
-　X1センター様のX Millennum Ver 0.26 t-tune step 1.43など
+　YATYATYATさんのX Millennum 106CT Ver 0.26 t-tune 1.68
+
+　https://xmil106.web.fc2.com/toppage.html
+
+　X1センター様のX Millennum Ver 0.26 t-tune step 1.43
 
 　http://www.x1center.org/
 
@@ -114,3 +118,5 @@ FNAME:*FDL EMM[CR]
 　EMMSAVEを実行するときは必要最小限のファイル(X1_SD_BOOT.X1T、EMMMENU.X1T)だけが登録された専用のSDカードで実行でしてみてください。
 
 　X1_SDからアクセス不可能になったSDカードもWindowsからは問題なくアクセスできるのでSDカードから作成に失敗したEMMx-SAVE.X1Tを削除したのちにすべての内容を一旦Windowsのフォルダに移動させ、SDカードにファイルが一つもない状態にしてから退避したWindowsのフォルダからすべてのファイルを戻すことで復旧できます。
+
+2025.12.22 X millennium系のエミュレーターの中でEMMをサポートしているのはT-tune系であることを追記。
