@@ -104,3 +104,11 @@ https://github.com/yanataka60/SOPtoDIP32
 |0D0Eh|W|アドレスカウンタ Bit[18:16]|
 |0D0Fh|R|データ読み出し:アドレスカウンタ+1|
 |0D0Fh|W|データ書き込み:アドレスカウンタ+1|
+
+## SAMPLEプログラム
+　SAMPLEフォルダ内にEMMMENUを置きました。
+
+　使い方については、フォルダ内のREADME.mdを参照してください。
+
+## 追記
+2025.12.22 SAMPLEプログラムを追加しました。
