@@ -16,7 +16,7 @@ https://takeda-toshiya.my.coocan.jp/
 
 　EMM DUMPファイルから32Byteのヘッダを除去し、EMM.BINにリネームしてエミュレーターと同じフォルダに置けばエミュレーターから利用できるようになります。
 
-　eX1, eX1twin, eX1turbo, eX1turboZは、16MのEMM0として対応しているようです。EMM DUMPファイルから32Byteのヘッダを除去した524320Byte、327680Byte(Hu-BASICから認識可能分)のEMM.BINでも問題なく認識しますが、エミュレーターを終了させると16MByteのファイルとして再作成されます。
+　eX1, eX1twin, eX1turbo, eX1turboZは、16MのEMM0として対応しているようです。EMM DUMPファイルから32Byteのヘッダを除去した524288Byte、327680Byte(Hu-BASICから認識可能分)のEMM.BINでも問題なく認識しますが、エミュレーターを終了させると16MByteのファイルとして再作成されます。
 
 　16MByteとして作成されたEMM.BINに32Byteのヘッダをつけて拡張子をX1TとすればEMM DUMPファイルとしてEMMLOADが可能です。(LOADされるのは先頭512kByte分のみ)
 
