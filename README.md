@@ -131,7 +131,7 @@ https://github.com/yanataka60/SOPtoDIP32
 ![cut1](https://github.com/yanataka60/EMM_for_X1/blob/main/JPEG/CUT1.JPG)
 
 ハンダ面全体
-![cut2](https://github.com/yanataka60/EMM_for_X1/blob/main/JPEG/CUT1.JPG)
+![cut2](https://github.com/yanataka60/EMM_for_X1/blob/main/JPEG/CUT2.JPG)
 
 ### ジャンパ個所
 　U12 74LS138 4PinとU13 74LS138 5Pin
