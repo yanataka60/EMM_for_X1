@@ -128,10 +128,10 @@ https://github.com/yanataka60/SOPtoDIP32
 　HM628512の22、24Pin、R2 10Kとの接続点とU12 74LS138 4Pinとの接続をカットします。
 
 部品面全体
-![cut1](https://github.com/yanataka60/EMM_for_MZ-2000/blob/main/JPEG/emm_CUT(0).JPG)
+![cut1](https://github.com/yanataka60/EMM_for_X1/blob/main/JPEG/CUT1.JPG)
 
 ハンダ面全体
-![cut2](https://github.com/yanataka60/EMM_for_MZ-2000/blob/main/JPEG/emm_CUT(3).jpg)
+![cut2](https://github.com/yanataka60/EMM_for_X1/blob/main/JPEG/CUT1.JPG)
 
 ### ジャンパ個所
 　U12 74LS138 4PinとU13 74LS138 5Pin
@@ -157,16 +157,16 @@ https://github.com/yanataka60/SOPtoDIP32
 　U13 74LS138 16Pin(5V)と追加74LS04 14Pin(5V)
 
 ハンダ面全体
-![jumper1](https://github.com/yanataka60/EMM_for_MZ-2000/blob/main/JPEG/jumper(1).JPG)
+![jumper1](https://github.com/yanataka60/EMM_for_X1/blob/main/JPEG/JUMPER1.JPG)
 
 ハンダ面拡大1
-![jumper2](https://github.com/yanataka60/EMM_for_MZ-2000/blob/main/JPEG/jumper(2).JPG)
+![jumper2](https://github.com/yanataka60/EMM_for_X1/blob/main/JPEG/JUMPER2.JPG)
 
 ハンダ面拡大2
-![jumper3](https://github.com/yanataka60/EMM_for_MZ-2000/blob/main/JPEG/jumper(3).JPG)
+![jumper3](https://github.com/yanataka60/EMM_for_X1/blob/main/JPEG/JUMPER3.JPG)
 
 部品面全体
-![jumper4](https://github.com/yanataka60/EMM_for_MZ-2000/blob/main/JPEG/jumper(1).JPG)
+![jumper4](https://github.com/yanataka60/EMM_for_X1/blob/main/JPEG/JUMPER4.JPG)
 
 ## 追記
 2025.12.22 SAMPLEプログラムを追加しました。
