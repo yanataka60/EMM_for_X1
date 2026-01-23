@@ -1,0 +1,219 @@
+﻿                                ;*** AILZ80ASM *** Z-80 Assembler, version 1.0.28.0, LST:Full:4
+       0003                     INPUTF      EQU 0003H   ;１行入力
+       000B                     PRINT       EQU 000BH   ;文字列のプリント
+       0013                     ACCPRT      EQU 0013H   ;１文字出力
+       001B                     INKEYD      EQU 001BH   ;１文字入力
+       04A3                     CR2     EQU 04A3H   ;行の先頭でないなら改行
+       04A7                     CR1     EQU 04A7H   ;改行
+       04C8                     ACCDIS      EQU 04C8H   ;１文字出力 コントロール・コード表示版
+       0FE2                     MONOP       EQU 0FE2H   ;モニタコールドスタート
+       1003                     HOTSTA      EQU 1003H   ;モニタホットスタート
+       1207                     ACHXPR      EQU 1207H   ;Aレジスタの値を16進数で出力
+       1451                     TUPPER      EQU 1451H   ;大文字に変換
+       1480                     IPLFCB      EQU 1480H   ;CZ-8CB01
+                                ;FNAME      EQU IPLFCB+1
+                                ;FSIZE      EQU IPLFCB+18
+                                ;SADRS      EQU IPLFCB+20
+                                ;EXEAD      EQU IPLFCB+22
+                                
+                                
+000000 14A0                             ORG 14A0H
+                                
+000000 14A0 11C415          10          LD  DE,TITLE            ;'******** EMM RAM TEST MENU ********'表示
+000003 14A3 CD0B00          17          CALL    PRINT
+000006 14A6 CDA704          17          CALL    CR1
+000009 14A9 CDA704          17  MENU:       CALL    CR1
+00000C 14AC 11E815          10          LD  DE,EMENU            ;'0)EMM0 1)EMM1 2)EMM2 3)EMM3 ?'表示
+00000F 14AF CD0B00          17          CALL    PRINT
+000012 14B2 3E01             7          LD  A,01H               ;一文字入力,キー入力待ち
+000014 14B4 CD1B00          17          CALL    INKEYD
+000017 14B7 324216          13          LD  (MSG1+3),A          ;EMM0～EMM3の文字を変更
+00001A 14BA 325416          13          LD  (MSG4+3),A
+                                
+00001D 14BD FE30             7          CP  '0'             ;EMM0
+00001F 14BF 2008            12          JR  NZ,EMM1
+000021 14C1 21000D          10          LD  HL,0D00H            ;EMM I/Oアドレス 0D00H
+000024 14C4 222C16          16          LD  (EMMADRS),HL
+000027 14C7 1822            12          JR  MENUS
+000029 14C9 FE31             7  EMM1:       CP  '1'             ;EMM1
+00002B 14CB 2008            12          JR  NZ,EMM2
+00002D 14CD 21040D          10          LD  HL,0D04H            ;EMM I/Oアドレス 0D04H
+000030 14D0 222C16          16          LD  (EMMADRS),HL
+000033 14D3 1816            12          JR  MENUS
+000035 14D5 FE32             7  EMM2:       CP  '2'             ;EMM2
+000037 14D7 2008            12          JR  NZ,EMM3
+000039 14D9 21080D          10          LD  HL,0D08H            ;EMM I/Oアドレス 0D08H
+00003C 14DC 222C16          16          LD  (EMMADRS),HL
+00003F 14DF 180A            12          JR  MENUS
+000041 14E1 FE33             7  EMM3:       CP  '3'             ;EMM3
+000043 14E3 20C4            12          JR  NZ,MENU
+000045 14E5 210C0D          10          LD  HL,0D0CH            ;EMM I/Oアドレス 0D0CH
+000048 14E8 222C16          16          LD  (EMMADRS),HL
+                                        
+       14EB                     MENUS:
+00004B 14EB 180C            12          JR  LSTART              ;EMMTEST
+                                
+00004D 14ED CDA704          17  EXIT:       CALL    CR1
+000050 14F0 110616          10          LD  DE,ENDMSG           ;'Run Again:[G 14A0],If not:[IPL RESET]'表示
+000053 14F3 CD0B00          17          CALL    PRINT
+000056 14F6 C30310          10          JP  HOTSTA
+                                
+       14F9                     LSTART:
+                                ;********************************** EMMLOAD処理本体 ************************************
+000059 14F9 CDA704          17  ST0:        CALL    CR1
+       14FC                     ML1:
+00005C 14FC 112E16          10          LD  DE,MSG0             ;' CHECK START!'表示
+00005F 14FF CD0B00          17          CALL    PRINT
+                                
+000062 1502 AF               4          XOR A
+000063 1503 326116          13          LD  (ADRSL),A
+000066 1506 326216          13          LD  (ADRSM),A
+000069 1509 326316          13          LD  (ADRSH),A
+                                
+00006C 150C CDA704          17          CALL    CR1
+       150F                     LOP1:       
+00006F 150F 3A6116          13          LD  A,(ADRSL)
+000072 1512 A7               4          AND A
+000073 1513 2006            12          JR  NZ,LOP2
+000075 1515 CDB115          17          CALL    PRTADRS
+000078 1518 CDA704          17          CALL    CR1
+                                
+       151B                     LOP2:
+00007B 151B CD7D15          17          CALL    EMMREAD
+00007E 151E 326416          13          LD  (WORK1),A
+000081 1521 3E55             7          LD  A,55H
+000083 1523 CD7615          17          CALL    EMMTEST
+000086 1526 FE55             7          CP  55H
+000088 1528 2040            12          JR  NZ,EMMERR
+00008A 152A 3EAA             7          LD  A,0AAH
+00008C 152C CD7615          17          CALL    EMMTEST
+00008F 152F FEAA             7          CP  0AAH
+000091 1531 2037            12          JR  NZ,EMMERR
+000093 1533 3A6116          13          LD  A,(ADRSL)
+000096 1536 CD7615          17          CALL    EMMTEST
+000099 1539 216116          10          LD  HL,ADRSL
+00009C 153C BE               7          CP  (HL)
+00009D 153D 202B            12          JR  NZ,EMMERR
+00009F 153F 3A6416          13          LD  A,(WORK1)
+0000A2 1542 CD7615          17          CALL    EMMTEST
+0000A5 1545 216416          10          LD  HL,WORK1
+0000A8 1548 BE               7          CP  (HL)
+0000A9 1549 201F            12          JR  NZ,EMMERR
+0000AB 154B 2A6116          16          LD  HL,(ADRSL)
+0000AE 154E 23               6          INC HL
+0000AF 154F 226116          16          LD  (ADRSL),HL
+0000B2 1552 7D               4          LD  A,L
+0000B3 1553 B4               4          OR  H
+0000B4 1554 20B9            12          JR  NZ,LOP1
+0000B6 1556 3A6316          13          LD  A,(ADRSH)
+0000B9 1559 3C               4          INC A
+0000BA 155A 326316          13          LD  (ADRSH),A
+0000BD 155D FE08             7          CP  08H
+0000BF 155F 20AE            12          JR  NZ,LOP1
+                                        
+0000C1 1561 113F16          10          LD  DE,MSG1             ;'EMMx MEMORY TEST END'を表示
+0000C4 1564 CD0B00          17          CALL    PRINT
+0000C7 1567 C3ED14          10          JP  EXIT                ;終了
+                                
+       156A                     EMMERR:
+0000CA 156A CDA704          17          CALL    CR1
+0000CD 156D 115116          10          LD  DE,MSG4             ;'EMMx CHECK ERROR!'を表示
+0000D0 1570 CD0B00          17          CALL    PRINT
+0000D3 1573 C3ED14          10          JP  EXIT                ;終了
+                                
+       1576                     EMMTEST:
+                                ;       PUSH    AF
+                                ;       CALL    ACHXPR
+                                ;       POP AF
+0000D6 1576 CD9615          17          CALL    EMMWRITE
+0000D9 1579 CD7D15          17          CALL    EMMREAD
+                                ;       PUSH    AF
+                                ;       CALL    ACHXPR
+                                ;       POP AF
+0000DC 157C C9              10          RET
+                                
+       157D                     EMMREAD:
+0000DD 157D ED4B2C16        20          LD  BC,(EMMADRS)
+0000E1 1581 3A6116          13          LD  A,(ADRSL)           ;EMMアドレスセット
+0000E4 1584 ED79            12  ML2:        OUT (C),A
+0000E6 1586 3A6216          13          LD  A,(ADRSM)
+0000E9 1589 03               6          INC BC
+0000EA 158A ED79            12          OUT (C),A
+0000EC 158C 3A6316          13          LD  A,(ADRSH)
+0000EF 158F 03               6          INC BC
+0000F0 1590 ED79            12          OUT (C),A
+0000F2 1592 03               6          INC BC
+0000F3 1593 ED78            12          IN  A,(C)
+0000F5 1595 C9              10          RET
+                                
+       1596                     EMMWRITE:
+0000F6 1596 F5              11          PUSH    AF
+0000F7 1597 ED4B2C16        20          LD  BC,(EMMADRS)
+0000FB 159B 3A6116          13          LD  A,(ADRSL)           ;EMMアドレスセット
+0000FE 159E ED79            12  ML4:        OUT (C),A
+000100 15A0 3A6216          13          LD  A,(ADRSM)
+000103 15A3 03               6          INC BC
+000104 15A4 ED79            12          OUT (C),A
+000106 15A6 3A6316          13          LD  A,(ADRSH)
+000109 15A9 03               6          INC BC
+00010A 15AA ED79            12          OUT (C),A
+00010C 15AC F1              10          POP AF
+00010D 15AD 03               6          INC BC
+00010E 15AE ED79            12          OUT (C),A
+000110 15B0 C9              10          RET
+                                
+       15B1                     PRTADRS:
+000111 15B1 3A6316          13          LD  A,(ADRSH)
+000114 15B4 CD0712          17          CALL    ACHXPR
+000117 15B7 3A6216          13          LD  A,(ADRSM)
+00011A 15BA CD0712          17          CALL    ACHXPR
+00011D 15BD 3A6116          13          LD  A,(ADRSL)
+000120 15C0 CD0712          17          CALL    ACHXPR
+000123 15C3 C9              10          RET
+                                        
+       15C4                     TITLE:
+000124 15C4 2A2A2A2A2A2A2A2A            DB  '******** EMM RAM TEST MENU ********'
+            20454D4D2052414D    
+            2054455354204D45    
+            4E55202A2A2A2A2A    
+            2A2A2A              
+000147 15E7 00                          DB  00H
+                                
+000148 15E8 3029454D4D302031    EMENU:      DB  '0)EMM0 1)EMM1 2)EMM2 3)EMM3 ?'
+            29454D4D31203229    
+            454D4D3220332945    
+            4D4D33203F          
+000165 1605 00                          DB  00H
+                                
+000166 1606 52756E2041676169    ENDMSG:     DB  'Run Again:[G 14A0],If not:[IPL RESET]'
+            6E3A5B4720313441    
+            305D2C4966206E6F    
+            743A5B49504C2052    
+            455345545D          
+00018B 162B 00                          DB  00H
+                                
+00018C 162C 000D                EMMADRS:    DW  0D00H
+                                
+00018E 162E 2052414D20544553    MSG0:       DB  ' RAM TEST START!'
+            5420535441525421    
+00019E 163E 00                          DB  00H
+                                
+       163F                     MSG1:
+00019F 163F 454D4D302052414D            DB  'EMM0 RAM TEST OK!'
+            2054455354204F4B    
+            21                  
+0001B0 1650 00                          DB  00H
+                                
+       1651                     MSG4:
+0001B1 1651 454D4D302052414D            DB  'EMM0 RAM ERROR!'
+            204552524F5221      
+0001C0 1660 00                          DB  00H
+                                
+0001C1 1661 00                  ADRSL:      DB  00H
+0001C2 1662 00                  ADRSM:      DB  00H
+0001C3 1663 00                  ADRSH:      DB  00H
+0001C4 1664 00                  WORK1:      DB  00H
+                                
+       1665                     ENT6:
+                                            END
+[EOF:EMMTEST.s:UTF_8]
